@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
@@ -7,19 +8,19 @@ import { Chat } from "stream-chat-react";
 import Cookies from "universal-cookie";
 
 import ChannelContainer from "@/components/ChannelContainer";
-import ChannelListContent from "@/components/ChannelListContent";
+const DynamicChannelListContent = dynamic(() =>
+    import("@/components/ChannelListContent")
+);
 
 import "stream-chat-react/dist/css/index.css";
-import Auth from "@/components/Auth";
-
-// import { useStateContext } from "@/context/StateContextProvider";
+const DynamicAuth = dynamic(() => import("@/components/Auth"));
 
 const cookies = new Cookies();
 
 const authToken = cookies.get("token");
 
-const api_key = process.env.STREAM_API_KEY;
-const client = StreamChat.getInstance("6jb44g337d5h");
+const api_key = process.env.NEXT_PUBLIC_STREAM_API_KEY;
+const client = StreamChat.getInstance(api_key);
 if (authToken) {
     client.connectUser(
         {
@@ -36,15 +37,19 @@ if (authToken) {
 
 export default function Home() {
     if (!authToken) {
-        return <Auth />;
+        return (
+            <>
+                <DynamicAuth />
+            </>
+        );
     }
 
     return (
         <>
             <Head>
                 <title>
-                    {cookies.get("fullName") || cookies.get("username")}'s Benji
-                    Chat.
+                    {cookies.get("fullName") || cookies.get("username")}&apos;s
+                    Benji Chat.
                 </title>
                 <meta
                     name="description"
@@ -52,11 +57,11 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div>
+            <div className="h-screen">
                 <Chat client={client} theme="team light">
-                    <div className="flex">
+                    <div className="flex h-full">
                         <div className="lg:w-1/4">
-                            <ChannelListContent />
+                            <DynamicChannelListContent />
                         </div>
                         <div className="lg:w-3/4">
                             <ChannelContainer />

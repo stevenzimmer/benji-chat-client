@@ -41,13 +41,8 @@ export default function ChannelContainer() {
         </div>
     );
     return (
-        <div className="channel-container">
-            <Channel
-                EmptyStateIndicator={EmptyState}
-                Message={(messageProps, i) => (
-                    <MessageTeam key={i} {...messageProps} />
-                )}
-            >
+        <div className="channel-container h-full">
+            <Channel EmptyStateIndicator={EmptyState} Message={MessageTeam}>
                 <ChannelInner />
             </Channel>
         </div>

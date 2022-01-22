@@ -1,24 +1,13 @@
-import { useEffect } from "react";
-import { useStateContext } from "@/context/StateContextProvider";
 import { useChatContext } from "stream-chat-react";
 import SearchResult from "./SearchResult";
 export default function ResultsDropdown({
+    focusedId,
     teamChannels,
     directMessagingChannels,
     loading,
     setQuery,
 }) {
-    const {
-        createType,
-        setCreateType,
-        isCreating,
-        setIsCreating,
-        isEditing,
-        setIsEditing,
-        setToggleContainer,
-    } = useStateContext();
-
-    const { client, setActiveChannel } = useChatContext();
+    const { setActiveChannel } = useChatContext();
     const setChannel = (channel) => {
         setQuery("");
         setActiveChannel(channel);
@@ -54,7 +43,7 @@ export default function ResultsDropdown({
                         focusedId={focusedId}
                         key={i}
                         setChannel={setChannel}
-                        type="channel"
+                        type="user"
                     />
                 ))
             )}

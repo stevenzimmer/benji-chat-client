@@ -17,6 +17,7 @@ const cookies = new Cookies();
 export default function Auth() {
     const [isSignUp, setIsSignUp] = useState(false);
     const [form, setForm] = useState(initalFormState);
+    const [err, setErr] = useState("");
     const handleChange = (e) => {
         // console.log(e.target.name);
         // console.log(e.target.value);
@@ -28,36 +29,46 @@ export default function Auth() {
         e.preventDefault();
         // console.log({ form });
 
-        const { username, password, phoneNumber, avatarURL } = form;
+        try {
+            const { username, password, phoneNumber, avatarURL } = form;
 
-        const URL = `http://localhost:5000/auth`;
+            const URL = `https://benji-chat-server.herokuapp.com/auth`;
 
-        const {
-            data: { token, userId, hashedPassword, fullName },
-        } = await axios.post(`${URL}/${isSignUp ? "signup" : "login"}`, {
-            username,
-            password,
-            fullName: form.fullName,
-            phoneNumber,
-            avatarURL,
-        });
+            const {
+                data: { token, userId, hashedPassword, fullName },
+            } = await axios.post(`${URL}/${isSignUp ? "signup" : "login"}`, {
+                username,
+                password,
+                fullName: form.fullName,
+                phoneNumber,
+                avatarURL,
+            });
 
-        cookies.set("token", token);
-        cookies.set("username", username);
-        cookies.set("fullName", fullName);
-        cookies.set("userId", userId);
+            // console.log({ data });
 
-        if (isSignUp) {
-            cookies.set("phoneNumber", phoneNumber);
-            cookies.set("avatarURL", avatarURL);
-            cookies.set("hashedPassword", hashedPassword);
+            cookies.set("token", token);
+            cookies.set("username", username);
+            cookies.set("fullName", fullName);
+            cookies.set("userId", userId);
+
+            if (isSignUp) {
+                cookies.set("phoneNumber", phoneNumber);
+                cookies.set("avatarURL", avatarURL);
+                cookies.set("hashedPassword", hashedPassword);
+            }
+
+            window.location.reload();
+        } catch (err) {
+            console.log({ err });
+            if (err.response.data.message) {
+                setErr(err.response.data.message);
+            }
         }
-
-        window.location.reload();
     };
 
     const switchMode = () => {
         setIsSignUp((prevIsSignUp) => !prevIsSignUp);
+        setErr("");
     };
     return (
         <>
@@ -65,7 +76,7 @@ export default function Auth() {
                 <title>
                     {isSignUp
                         ? "Sign up to use Benji Chat"
-                        : "Welcome Back! Log in to use Benji Chat"}
+                        : "Welcome Back! Sign in to use Benji Chat"}
                 </title>
                 <meta
                     name="description"
@@ -73,95 +84,157 @@ export default function Auth() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <p>{isSignUp ? "Sign Up" : "Sign in"}</p>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <input
-                        required
-                        type="text"
-                        name="username"
-                        placeholder="User name"
-                        onChange={handleChange}
-                    />
-                </div>
+            <div className="h-screen">
+                <div className="flex h-full justify-start">
+                    <div className="lg:w-1/4">
+                        <div className="h-full flex items-center justify-center bg-blue-50">
+                            <div className="flex justify-center items-center w-full">
+                                <div className="w-11/12">
+                                    <div className="bg-white p-12 rounded shadow w-full">
+                                        <p className="text-center mb-6 text-2xl font-bold">
+                                            {isSignUp ? "Sign Up" : "Sign in"}
+                                        </p>
+                                        <form onSubmit={handleSubmit}>
+                                            <div>
+                                                <label htmlFor="username">
+                                                    Username
+                                                </label>
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    name="username"
+                                                    placeholder="User name"
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
 
-                {isSignUp && (
-                    <>
-                        <div>
-                            <label htmlFor="fullName">Full Name</label>
-                            <input
-                                required
-                                type="text"
-                                name="fullName"
-                                placeholder="Full name"
-                                onChange={handleChange}
-                            />
-                        </div>
+                                            {isSignUp && (
+                                                <>
+                                                    <div>
+                                                        <label htmlFor="fullName">
+                                                            Full Name
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            name="fullName"
+                                                            placeholder="Full name"
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                    </div>
 
-                        <div>
-                            <label htmlFor="phoneNumber">Phone number</label>
-                            <input
-                                required
-                                type="text"
-                                name="phoneNumber"
-                                placeholder="Phone Number"
-                                onChange={handleChange}
-                            />
+                                                    <div>
+                                                        <label htmlFor="phoneNumber">
+                                                            Phone number
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            name="phoneNumber"
+                                                            placeholder="Phone Number"
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label htmlFor="avatarURL">
+                                                            Avatar URL
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            name="avatarURL"
+                                                            placeholder="Avatar URL"
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                    </div>
+                                                </>
+                                            )}
+                                            <div>
+                                                <label htmlFor="password">
+                                                    Password
+                                                </label>
+                                                <input
+                                                    required
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder="Password"
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+                                            {isSignUp && (
+                                                <>
+                                                    {" "}
+                                                    <div>
+                                                        <label htmlFor="confirmPassword">
+                                                            Confirm Password
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="password"
+                                                            name="confirmPassword"
+                                                            placeholder="Confirm Password"
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                        />
+                                                    </div>
+                                                </>
+                                            )}
+                                            <button type="submit">
+                                                {isSignUp
+                                                    ? "Sign Up"
+                                                    : "Sign in"}
+                                            </button>
+                                        </form>
+                                        {err && (
+                                            <>
+                                                <div>
+                                                    <p className="text-red-500">
+                                                        {err}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p>
+                                                        <span
+                                                            onClick={switchMode}
+                                                        >
+                                                            Sign up for an
+                                                            account
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
+                                        {!err && (
+                                            <div>
+                                                <p>
+                                                    {isSignUp
+                                                        ? "Already have an account?"
+                                                        : "Don't have an account?"}
+                                                    <span onClick={switchMode}>
+                                                        {" "}
+                                                        {isSignUp
+                                                            ? "Sign in"
+                                                            : "Sign up"}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="avatarURL">Avatar URL</label>
-                            <input
-                                required
-                                type="text"
-                                name="avatarURL"
-                                placeholder="Avatar URL"
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </>
-                )}
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        required
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={handleChange}
-                    />
+                    </div>
+                    <div className="lg:w-3/4">
+                        <div className="h-full w-full bg-blue-100"></div>
+                    </div>
                 </div>
-                {isSignUp && (
-                    <>
-                        {" "}
-                        <div>
-                            <label htmlFor="confirmPassword">
-                                Confirm Password
-                            </label>
-                            <input
-                                required
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="Confirm Password"
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </>
-                )}
-                <button type="submit">
-                    {isSignUp ? "Sign Up" : "Sign in"}
-                </button>
-            </form>
-            <div>
-                <p>
-                    {isSignUp
-                        ? "Already have an account?"
-                        : "Don't have an account?"}
-                    <span onClick={switchMode}>
-                        {" "}
-                        {isSignUp ? "Sign in" : "Sign up"}
-                    </span>
-                </p>
             </div>
         </>
     );

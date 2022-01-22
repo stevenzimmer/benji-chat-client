@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 import UserList from "./UserList";
@@ -40,11 +40,16 @@ export default function CreateChannel() {
         }
     };
 
+    useEffect(() => {
+        setSelectedUsers([client.userId || ""]);
+        console.log({ selectedUsers });
+    }, []);
+
     return (
-        <div className="create-channel">
+        <div className="create-channel p-6">
             <div className="flex items-center justify-between mb-4">
                 <div>
-                    <p>
+                    <p className="font-bold">
                         {createType === "team"
                             ? "Create a new channel"
                             : "Send a direct message"}
@@ -62,7 +67,7 @@ export default function CreateChannel() {
 
             {createType === "team" && <ChannelNameInput />}
 
-            <p className="mb-2">Add Members</p>
+            <p className="mb-2 font-semibold">Add Members</p>
             <UserList />
 
             <div

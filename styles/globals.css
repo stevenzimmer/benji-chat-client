@@ -7,6 +7,7 @@
         &-content {
             .str {
                 &-chat {
+                    @apply h-full mb-12 last:mb-0;
                     &-channel {
                         &-list {
                             @apply float-none;

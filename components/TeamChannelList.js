@@ -33,22 +33,25 @@ export default function TeamChannelList({
         );
     }
     return (
-        <div className="flex items-center team-channel-list">
-            <div>
-                <p>{type === "team" ? "Channels" : "Direct Messages"} </p>
+        <>
+            <div className="flex items-center team-channel-list mb-4">
+                <div>
+                    <p>{type === "team" ? "Channels" : "Direct Messages"} </p>
+                </div>
+                <div>
+                    <GrFormAdd
+                        onClick={() => {
+                            setCreateType(type);
+                            setIsCreating((prevState) => !prevState);
+                            setIsEditing(false);
+                            if (setToggleContainer) {
+                                setToggleContainer((prevState) => !prevState);
+                            }
+                        }}
+                    />
+                </div>
             </div>
-            <div>
-                <GrFormAdd
-                    onClick={() => {
-                        setCreateType(type);
-                        setIsCreating((prevState) => !prevState);
-                        setIsEditing(false);
-                        if (setToggleContainer) {
-                            setToggleContainer((prevState) => !prevState);
-                        }
-                    }}
-                />
-            </div>
-        </div>
+            {children}
+        </>
     );
 }

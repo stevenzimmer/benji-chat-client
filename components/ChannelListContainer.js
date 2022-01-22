@@ -18,9 +18,12 @@ export default function ChannelListContainer() {
                 className={`channel-list-container-mobile lg:hidden bg-grey-100 ${
                     toggleContainer ? "left-0" : "-left-3/4"
                 }`}
-                
             >
-                <div className={} onClick={(e) => setToggleContainer((prevToggle) => !prevToggle)}></div>
+                <div
+                    onClick={(e) =>
+                        setToggleContainer((prevToggle) => !prevToggle)
+                    }
+                ></div>
                 <ChannelListContent />
             </div>
         </>
