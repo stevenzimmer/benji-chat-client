@@ -2,9 +2,37 @@ import { useState, useEffect } from "react";
 import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 import UserList from "./UserList";
-import ChannelNameInput from "./ChannelNameInput";
+// import ChannelNameInput from "./ChannelNameInput";
 
 import { AiFillCloseCircle } from "react-icons/ai";
+
+const ChannelNameInput = () => {
+    const { channelName, setChannelName } = useStateContext();
+    const handleChange = (event) => {
+        event.preventDefault();
+
+        setChannelName(event.target.value);
+    };
+
+    return (
+        <div className="channel-name-input__wrapper ">
+            <div className="flex items-center mb-6">
+                <div>
+                    <p>Name</p>
+                </div>
+                <div>
+                    <input
+                        value={channelName}
+                        onChange={handleChange}
+                        placeholder="channel-name"
+                    />
+                </div>
+            </div>
+
+            <p>Add Members</p>
+        </div>
+    );
+};
 export default function CreateChannel() {
     const {
         createType,
@@ -19,12 +47,22 @@ export default function CreateChannel() {
         channelName,
     } = useStateContext();
 
-    const { client, setActiveChannel } = useChatContext();
+    const { client, setActiveChannel, channel } = useChatContext();
+
+    console.log("create channel client", client);
+
+    console.log("current user", client.userID);
+
+    useEffect(() => {
+        setSelectedUsers([client.userID]);
+        console.log({ selectedUsers });
+    }, []);
 
     const createChannel = async (e) => {
         e.preventDefault();
+        console.log({ selectedUsers });
         try {
-            console.log("create cahnnel");
+            console.log("create channel");
             const newChannel = await client.channel(createType, channelName, {
                 name: channelName,
                 members: selectedUsers,
@@ -33,17 +71,16 @@ export default function CreateChannel() {
             await newChannel.watch();
             setChannelName("");
             setIsCreating(false);
-            setSelectedUsers([client.userID]);
+            setSelectedUsers((prevState) => {
+                console.log({ prevState });
+                console.log(client.userID);
+                return [...prevState, client.userID];
+            });
             setActiveChannel(newChannel);
         } catch (error) {
             console.log({ error });
         }
     };
-
-    useEffect(() => {
-        setSelectedUsers([client.userId || ""]);
-        console.log({ selectedUsers });
-    }, []);
 
     return (
         <div className="create-channel p-6">
@@ -65,9 +102,13 @@ export default function CreateChannel() {
                 </div>
             </div>
 
-            {createType === "team" && <ChannelNameInput />}
+            {createType === "team" && (
+                <ChannelNameInput
+                    channelName={channelName}
+                    setChannelName={setChannelName}
+                />
+            )}
 
-            <p className="mb-2 font-semibold">Add Members</p>
             <UserList />
 
             <div

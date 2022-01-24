@@ -28,8 +28,8 @@ export default function ChannelSearch() {
                 userResponse,
             ]);
 
-            console.log({ channels });
-            console.log({ users });
+            // console.log({ channels });
+            // console.log({ users });
 
             if (channels.length) {
                 setTeamChannels(channels);

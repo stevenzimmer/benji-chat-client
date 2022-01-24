@@ -3,19 +3,24 @@ import { useState, useEffect } from "react";
 import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 export default function ChannelNameInput() {
-    const { channelName, setChannelName, setSelectedUsers } = useStateContext();
-    const { client, setActiveChannel } = useChatContext();
+    const { channelName, setChannelName, setSelectedUsers, selectedUsers } =
+        useStateContext();
+    const { client, setActiveChannel, channel } = useChatContext();
     // const [selected, setSelected] = useState([]);
 
+    // console.log({ channel });
+    // console.log({ client });
+    // console.log({ selectedUsers });
     const handleChange = (e) => {
         e.preventDefault();
         setChannelName(e.target.value);
     };
 
-    useEffect(() => {
-        // setChannelName(channel?.data?.name);
-        setSelectedUsers(client.userID || "");
-    }, []);
+    // useEffect(() => {
+    //     setChannelName(channel?.data?.name);
+
+    //     setSelectedUsers((prevState) => [...prevState, client.userID]);
+    // }, []);
 
     return (
         <div className="channel-name-input">

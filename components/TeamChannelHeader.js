@@ -24,7 +24,7 @@ export default function TeamChannelHeader() {
     };
 
     return (
-        <div className="team-channer-header">
+        <div className="team-channer-header p-6">
             <div className="flex justify-between">
                 <div>
                     <MessagingHeader />
@@ -45,33 +45,32 @@ const MessagingHeader = () => {
     );
     const additionalMembers = members.length - 3;
 
-    const {
-        setCreateType,
-        setIsCreating,
-        setIsEditing,
-        toggleContainer,
-        setToggleContainer,
-    } = useStateContext();
+    const { setIsEditing } = useStateContext();
 
     if (channel.type === "messaging") {
         return (
-            <div>
-                {members.map(({ user }, i) => (
-                    <div key={i}>
-                        <Avatar name={user.fullName} size={32} />
-                        <p>{user.fullName}</p>
-                    </div>
-                ))}
+            <>
+                {members.map(({ user }, i) => {
+                    console.log({ user });
+                    return (
+                        <div key={i} className="flex items-center">
+                            <Avatar name={user.fullName || user.id} size={32} />
+                            <p>{user.fullName || user.id}</p>
+                        </div>
+                    );
+                })}
                 {additionalMembers > 0 && <p>and {additionalMembers} more</p>}
-            </div>
+            </>
         );
     }
+
+    console.log({ channel });
 
     return (
         <>
             <div className="flex items-center messaging-header ">
                 <div>
-                    <p># {channel.data.name}</p>
+                    <p># {channel.data.name || channel.data.id}</p>
                 </div>
                 <div>
                     <span>

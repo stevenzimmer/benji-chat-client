@@ -4,6 +4,7 @@ import { Avatar } from "stream-chat-react";
 import { FcInvite } from "react-icons/fc";
 import { useStateContext } from "@/context/StateContextProvider";
 export default function UserItem({ user }) {
+    // console.log({ user });
     const { selectedUsers, setSelectedUsers } = useStateContext();
 
     const [selected, setSelected] = useState(false);
@@ -20,8 +21,9 @@ export default function UserItem({ user }) {
     };
 
     useEffect(() => {
-        setSelectedUsers([user.id]);
-    }, []);
+        console.log({ selectedUsers });
+        // selectedUsers();
+    }, [selectedUsers]);
     return (
         <div className="user-item py-2" onClick={handleSelect}>
             <div className="flex items-center">

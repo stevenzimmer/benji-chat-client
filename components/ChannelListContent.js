@@ -19,6 +19,9 @@ export default function ChannelListContent() {
 
     const filters = { members: { $in: [client.userID] } };
 
+    console.log({ client });
+    // console.log("user", client._user.name);
+
     return (
         <div className="flex channel-list-content h-full">
             <div className="lg:w-1/4">

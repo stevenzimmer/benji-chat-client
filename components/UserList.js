@@ -9,7 +9,6 @@ import UserItem from "./UserItem";
 // import { useStateContext } from "@/context/StateContextProvider";
 
 export default function UserList() {
-    // const { selected, setSelectedUsers } = useStateContext();
     const { client } = useChatContext();
     const [users, setUsers] = useState([]);
 
@@ -66,6 +65,7 @@ export default function UserList() {
             </UserListContainer>
         );
     }
+    // console.log({ users });
     return (
         <div className="user-list">
             <UserListContainer>

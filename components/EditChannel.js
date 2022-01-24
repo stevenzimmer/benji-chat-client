@@ -3,9 +3,29 @@ import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 import UserList from "./UserList";
 
-import ChannelNameInput from "./ChannelNameInput";
+// import ChannelNameInput from "./ChannelNameInput";
 
 import { AiFillCloseCircle } from "react-icons/ai";
+
+const ChannelNameInput = ({ channelName = "", setChannelName }) => {
+    const handleChange = (event) => {
+        event.preventDefault();
+
+        setChannelName(event.target.value);
+    };
+
+    return (
+        <div className="channel-name-input__wrapper">
+            <p>Name</p>
+            <input
+                value={channelName}
+                onChange={handleChange}
+                placeholder="channel-name"
+            />
+            <p>Add Members</p>
+        </div>
+    );
+};
 
 export default function EditChannel() {
     const { channel } = useChatContext();
@@ -54,7 +74,11 @@ export default function EditChannel() {
                 />
             </div>
 
-            <ChannelNameInput />
+            <ChannelNameInput
+                channelName={channelName}
+                setChannelName={setChannelName}
+            />
+            <UserList />
             <div onClick={handleSaveChanges}>
                 <p>Save Changes</p>
             </div>
