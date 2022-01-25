@@ -7,6 +7,8 @@ import styles from "../styles/Home.module.css";
 import { StreamChat } from "stream-chat";
 import { Chat, useChatContext } from "stream-chat-react";
 import Cookies from "universal-cookie";
+import ChannelListContent from "@/components/ChannelListContent";
+import ChannelContainer from "@/components/ChannelContainer";
 
 const DynamicChannelContainer = dynamic(() =>
     import("@/components/ChannelContainer")
@@ -33,7 +35,8 @@ client.connectUser(
 );
 
 export default function Index() {
-    console.log(client);
+    console.log({ client });
+
     return (
         <>
             <Head>
@@ -51,10 +54,10 @@ export default function Index() {
                 <Chat client={client} theme="team light">
                     <div className="flex h-full">
                         <div className="lg:w-1/4">
-                            <DynamicChannelListContent />
+                            <ChannelListContent />
                         </div>
                         <div className="lg:w-3/4">
-                            <DynamicChannelContainer />
+                            <ChannelContainer />
                         </div>
                     </div>
                 </Chat>
@@ -72,10 +75,7 @@ export async function getServerSideProps(context) {
 
     if (serverAuthToken) {
         return {
-            props: {
-                authToken: serverAuthToken,
-                client: JSON.parse(JSON.stringify(client)),
-            },
+            props: {},
         };
     } else {
         return {

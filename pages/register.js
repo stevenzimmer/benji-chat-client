@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import ClosingAlert from "@material-tailwind/react/ClosingAlert";
@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import Button from "@material-tailwind/react/Button";
 
 import { useForm } from "react-hook-form";
+import { STREAM_API_URL } from "@/config/index";
 
 const cookies = new Cookies();
 
@@ -47,7 +48,30 @@ export default function Register() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm({ resolver: yupResolver(schema) });
+    } = useForm({
+        defaultValues: {
+            username: "",
+            fullName: "",
+            phoneNumber: "",
+            password: "",
+            confirmPassword: "",
+        },
+        resolver: yupResolver(schema),
+    });
+
+    useEffect(() => {
+        setErr("");
+
+        const subscription = watch((data) => {
+            console.log(data);
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [watch]);
+
+    // console.log(watch());
 
     const submitForm = async (form) => {
         console.log("submit form ", form);
@@ -56,7 +80,7 @@ export default function Register() {
 
         try {
             const { username, phoneNumber } = form;
-            const URL = `http://localhost:5000/auth`;
+            const URL = `${STREAM_API_URL}/auth`;
 
             const {
                 data: { token, userId, hashedPassword, fullName },

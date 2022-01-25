@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import ClosingAlert from "@material-tailwind/react/ClosingAlert";
@@ -16,6 +16,8 @@ import Button from "@material-tailwind/react/Button";
 import { useForm } from "react-hook-form";
 
 const cookies = new Cookies();
+
+import { STREAM_API_URL } from "@/config/index";
 
 export default function Login() {
     const router = useRouter();
@@ -32,7 +34,24 @@ export default function Login() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm({ resolver: yupResolver(schema) });
+    } = useForm({
+        defaultValues: {
+            username: "",
+            password: "",
+        },
+        resolver: yupResolver(schema),
+    });
+
+    useEffect(() => {
+        const subscription = watch((data) => {
+            console.log(data);
+            setErr("");
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [watch]);
 
     const submitForm = async (form) => {
         console.log("submit form ", form);
@@ -41,7 +60,7 @@ export default function Login() {
 
         try {
             // const { username } = form;
-            const URL = `http://localhost:5000/auth`;
+            const URL = `${STREAM_API_URL}/auth`;
 
             const {
                 data: { token, fullName, userId, username, hashedPassword },
@@ -101,6 +120,10 @@ export default function Login() {
                                             onSubmit={handleSubmit(submitForm)}
                                             className={`${isLoading} ? "opacity-75" : "" `}
                                         >
+                                            <Link href="/forgot-user/">
+                                                <a href="">Forgot Username?</a>
+                                            </Link>
+                                            <br />
                                             <input
                                                 autoComplete="off"
                                                 type="text"
@@ -112,15 +135,20 @@ export default function Login() {
                                                         : ""
                                                 }`}
                                             />
+                                            <br />
                                             {errors.username &&
                                                 errors.username.message}
-
+                                            <Link href="/reset/">
+                                                <a href="">Forgot Password?</a>
+                                            </Link>
+                                            <br />
                                             <input
                                                 type="password"
                                                 autoComplete="off"
                                                 {...register("password")}
                                                 placeholder="Password"
                                             />
+                                            <br />
                                             {errors.password &&
                                                 errors.password.message}
 
@@ -152,7 +180,7 @@ export default function Login() {
                                         )}
 
                                         <div>
-                                            {`Don't yet have an account? `}{" "}
+                                            {`Don't yet have an account? `}
                                             <Link href="/register/">
                                                 <a>Register here</a>
                                             </Link>
