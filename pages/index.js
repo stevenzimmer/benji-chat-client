@@ -10,13 +10,6 @@ import Cookies from "universal-cookie";
 import ChannelListContent from "@/components/ChannelListContent";
 import ChannelContainer from "@/components/ChannelContainer";
 
-const DynamicChannelContainer = dynamic(() =>
-    import("@/components/ChannelContainer")
-);
-const DynamicChannelListContent = dynamic(() =>
-    import("@/components/ChannelListContent")
-);
-
 import "stream-chat-react/dist/css/index.css";
 
 const cookies = new Cookies();
@@ -35,7 +28,7 @@ client.connectUser(
 );
 
 export default function Index() {
-    console.log({ client });
+    // console.log({ client });
 
     return (
         <>

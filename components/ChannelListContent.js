@@ -19,7 +19,7 @@ export default function ChannelListContent() {
 
     const filters = { members: { $in: [client.userID] } };
 
-    console.log({ client });
+    // console.log({ client });
     // console.log("user", client._user.name);
 
     return (

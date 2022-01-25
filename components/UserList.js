@@ -65,7 +65,7 @@ export default function UserList() {
             </UserListContainer>
         );
     }
-    // console.log({ users });
+    // console.log("User list", users);
     return (
         <div className="user-list">
             <UserListContainer>

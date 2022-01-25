@@ -3,15 +3,15 @@ import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 import UserList from "./UserList";
 // import ChannelNameInput from "./ChannelNameInput";
+import kebabCase from "just-kebab-case";
 
 import { AiFillCloseCircle } from "react-icons/ai";
 
 const ChannelNameInput = () => {
     const { channelName, setChannelName } = useStateContext();
-    const handleChange = (event) => {
-        event.preventDefault();
-
-        setChannelName(event.target.value);
+    const handleChange = (e) => {
+        e.preventDefault();
+        setChannelName(e.target.value);
     };
 
     return (
@@ -49,24 +49,30 @@ export default function CreateChannel() {
 
     const { client, setActiveChannel, channel } = useChatContext();
 
-    console.log("create channel client", client);
+    // console.log("create channel client", client);
 
-    console.log("current user", client.userID);
+    // console.log("current user", client.userID);
 
     useEffect(() => {
         setSelectedUsers([client.userID]);
-        console.log({ selectedUsers });
+        setChannelName("");
+        // console.log({ selectedUsers });
     }, []);
 
     const createChannel = async (e) => {
         e.preventDefault();
-        console.log({ selectedUsers });
+        // console.log({ selectedUsers });
+        // console.log(kebabCase(channelName));
         try {
             console.log("create channel");
-            const newChannel = await client.channel(createType, channelName, {
-                name: channelName,
-                members: selectedUsers,
-            });
+            const newChannel = await client.channel(
+                createType,
+                kebabCase(channelName),
+                {
+                    name: channelName,
+                    members: selectedUsers,
+                }
+            );
 
             await newChannel.watch();
             setChannelName("");

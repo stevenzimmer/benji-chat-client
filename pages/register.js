@@ -43,19 +43,20 @@ export default function Register() {
             .oneOf([Yup.ref("password")], "Passwords must and should match"),
     });
 
+    const defaultValues = {
+        username: "",
+        fullName: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: "",
+    };
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm({
-        defaultValues: {
-            username: "",
-            fullName: "",
-            phoneNumber: "",
-            password: "",
-            confirmPassword: "",
-        },
+        defaultValues,
         resolver: yupResolver(schema),
     });
 
@@ -63,15 +64,13 @@ export default function Register() {
         setErr("");
 
         const subscription = watch((data) => {
-            console.log(data);
+            console.log({ data });
         });
 
         return () => {
             subscription.unsubscribe();
         };
     }, [watch]);
-
-    // console.log(watch());
 
     const submitForm = async (form) => {
         console.log("submit form ", form);
@@ -141,71 +140,45 @@ export default function Register() {
                                             onSubmit={handleSubmit(submitForm)}
                                             className={`${isLoading} ? "opacity-75" : "" `}
                                         >
-                                            <input
-                                                autoComplete="off"
-                                                type="text"
-                                                {...register("username")}
-                                                placeholder="User name"
-                                                className={`border ${
-                                                    errors.username
-                                                        ? " border-red-500"
-                                                        : ""
-                                                }`}
-                                            />
-                                            {errors.username &&
-                                                errors.username.message}
-
-                                            <>
-                                                <input
-                                                    autoComplete="off"
-                                                    type="text"
-                                                    {...register("fullName")}
-                                                    placeholder="Full name"
-                                                    className={`border ${
-                                                        errors.fullName
-                                                            ? " border-red-500"
-                                                            : ""
-                                                    }`}
-                                                />
-                                                {errors.fullName &&
-                                                    errors.fullName.message}
-                                                <input
-                                                    autoComplete="off"
-                                                    type="text"
-                                                    {...register("phoneNumber")}
-                                                    placeholder="Phone Number"
-                                                    className={`border ${
-                                                        errors.phoneNumber
-                                                            ? " border-red-500"
-                                                            : ""
-                                                    }`}
-                                                />
-                                                {errors.phoneNumber &&
-                                                    errors.phoneNumber.message}
-                                            </>
-
-                                            <input
-                                                type="password"
-                                                autoComplete="off"
-                                                {...register("password")}
-                                                placeholder="Password"
-                                            />
-                                            {errors.password &&
-                                                errors.password.message}
-
-                                            <input
-                                                autoComplete="off"
-                                                type="password"
-                                                {...register("confirmPassword")}
-                                                placeholder="Confirm Password"
-                                            />
-                                            {errors.confirmPassword && (
-                                                <p>
-                                                    {
-                                                        errors.confirmPassword
-                                                            .message
-                                                    }
-                                                </p>
+                                            {Object.keys(defaultValues).map(
+                                                (objKey, i) => {
+                                                    console.log({ objKey });
+                                                    const result =
+                                                        objKey.replace(
+                                                            /([A-Z])/g,
+                                                            " $1"
+                                                        );
+                                                    const finalResult =
+                                                        result
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        result.slice(1);
+                                                    return (
+                                                        <div key={i}>
+                                                            <input
+                                                                autoComplete="off"
+                                                                type="text"
+                                                                {...register(
+                                                                    objKey
+                                                                )}
+                                                                placeholder={
+                                                                    finalResult
+                                                                }
+                                                                className={`border ${
+                                                                    errors[
+                                                                        objKey
+                                                                    ]
+                                                                        ? " border-red-500"
+                                                                        : ""
+                                                                }`}
+                                                            />
+                                                            <br />
+                                                            {errors[objKey] &&
+                                                                errors[objKey]
+                                                                    .message}
+                                                        </div>
+                                                    );
+                                                }
                                             )}
 
                                             {!err && (

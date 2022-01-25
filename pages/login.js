@@ -29,16 +29,18 @@ export default function Login() {
         password: Yup.string().required("Please add a password"),
     });
 
+    const defaultValues = {
+        username: "",
+        password: "",
+    };
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm({
-        defaultValues: {
-            username: "",
-            password: "",
-        },
+        defaultValues,
         resolver: yupResolver(schema),
     });
 
@@ -120,37 +122,50 @@ export default function Login() {
                                             onSubmit={handleSubmit(submitForm)}
                                             className={`${isLoading} ? "opacity-75" : "" `}
                                         >
-                                            <Link href="/forgot-user/">
+                                            {/* <Link href="/forgot-user/">
                                                 <a href="">Forgot Username?</a>
-                                            </Link>
-                                            <br />
-                                            <input
-                                                autoComplete="off"
-                                                type="text"
-                                                {...register("username")}
-                                                placeholder="User name"
-                                                className={`border ${
-                                                    errors.username
-                                                        ? " border-red-500"
-                                                        : ""
-                                                }`}
-                                            />
-                                            <br />
-                                            {errors.username &&
-                                                errors.username.message}
-                                            <Link href="/reset/">
-                                                <a href="">Forgot Password?</a>
-                                            </Link>
-                                            <br />
-                                            <input
-                                                type="password"
-                                                autoComplete="off"
-                                                {...register("password")}
-                                                placeholder="Password"
-                                            />
-                                            <br />
-                                            {errors.password &&
-                                                errors.password.message}
+                                            </Link> */}
+
+                                            {Object.keys(defaultValues).map(
+                                                (objKey, i) => {
+                                                    console.log({ objKey });
+                                                    const result =
+                                                        objKey.replace(
+                                                            /([A-Z])/g,
+                                                            " $1"
+                                                        );
+                                                    const finalResult =
+                                                        result
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        result.slice(1);
+                                                    return (
+                                                        <div key={i}>
+                                                            <input
+                                                                autoComplete="off"
+                                                                type="text"
+                                                                {...register(
+                                                                    objKey
+                                                                )}
+                                                                placeholder={
+                                                                    finalResult
+                                                                }
+                                                                className={`border ${
+                                                                    errors[
+                                                                        objKey
+                                                                    ]
+                                                                        ? " border-red-500"
+                                                                        : ""
+                                                                }`}
+                                                            />
+                                                            <br />
+                                                            {errors[objKey] &&
+                                                                errors[objKey]
+                                                                    .message}
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
 
                                             {!err && (
                                                 <Button

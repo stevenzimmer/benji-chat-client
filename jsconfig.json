@@ -5,7 +5,9 @@
             "@/components/*": ["components/*"],
             "@/config/*": ["config/*"],
             "@/context/*": ["context/*"],
-            "@/styles/*": ["styles/*"]
+            "@/styles/*": ["styles/*"],
+            "@/helpers/*": ["helpers/*"]
+
             // "@/data/*": ["data/*"],
             // "@/icons/*": ["icons/*"],
             // "@/layouts/*": ["layouts/*"]

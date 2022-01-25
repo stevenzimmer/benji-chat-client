@@ -16,6 +16,8 @@ import Button from "@material-tailwind/react/Button";
 import { useForm } from "react-hook-form";
 import { STREAM_API_URL } from "@/config/index";
 
+import { formInputs } from "@/helpers/formInputs";
+
 const cookies = new Cookies();
 
 export default function Reset() {
@@ -159,8 +161,20 @@ export default function Reset() {
                                             onSubmit={handleSubmit(submitForm)}
                                             className={`${isLoading} ? "opacity-75" : "" `}
                                         >
+                                            {/* {formInputs(defaultValues)} */}
                                             {Object.keys(defaultValues).map(
                                                 (objKey, i) => {
+                                                    console.log({ objKey });
+                                                    const result =
+                                                        objKey.replace(
+                                                            /([A-Z])/g,
+                                                            " $1"
+                                                        );
+                                                    const finalResult =
+                                                        result
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        result.slice(1);
                                                     return (
                                                         <div key={i}>
                                                             <input
@@ -170,7 +184,7 @@ export default function Reset() {
                                                                     objKey
                                                                 )}
                                                                 placeholder={
-                                                                    objKey
+                                                                    finalResult
                                                                 }
                                                                 className={`border ${
                                                                     errors[
@@ -184,7 +198,6 @@ export default function Reset() {
                                                             {errors[objKey] &&
                                                                 errors[objKey]
                                                                     .message}
-                                                            <br />
                                                         </div>
                                                     );
                                                 }

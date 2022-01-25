@@ -45,7 +45,7 @@ const MessagingHeader = () => {
     );
     const additionalMembers = members.length - 3;
 
-    const { setIsEditing } = useStateContext();
+    const { setIsEditing, channelName, setChannelName } = useStateContext();
 
     if (channel.type === "messaging") {
         return (
@@ -64,7 +64,7 @@ const MessagingHeader = () => {
         );
     }
 
-    console.log({ channel });
+    // console.log({ channel });
 
     return (
         <>
@@ -75,9 +75,10 @@ const MessagingHeader = () => {
                 <div>
                     <span>
                         <GrCircleInformation
-                            onClick={() =>
-                                setIsEditing((prevState) => !prevState)
-                            }
+                            onClick={() => {
+                                setIsEditing((prevState) => !prevState);
+                                setChannelName(channel.data.name);
+                            }}
                         />
                     </span>
                 </div>
