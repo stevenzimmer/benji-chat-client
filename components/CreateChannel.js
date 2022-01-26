@@ -51,10 +51,17 @@ export default function CreateChannel() {
 
     // console.log("create channel client", client);
 
-    // console.log("current user", client.userID);
+    console.log("current user", client.userID);
 
     useEffect(() => {
-        setSelectedUsers([client.userID]);
+        setSelectedUsers([]);
+
+        setSelectedUsers((prevState) => {
+            console.log({ prevState });
+            console.log(client.userID);
+
+            return [...prevState, client.userID];
+        });
         setChannelName("");
         // console.log({ selectedUsers });
     }, []);
@@ -63,8 +70,10 @@ export default function CreateChannel() {
         e.preventDefault();
         // console.log({ selectedUsers });
         // console.log(kebabCase(channelName));
+
         try {
             console.log("create channel");
+            console.log({ createType });
             const newChannel = await client.channel(
                 createType,
                 kebabCase(channelName),
@@ -80,7 +89,9 @@ export default function CreateChannel() {
             setSelectedUsers((prevState) => {
                 console.log({ prevState });
                 console.log(client.userID);
-                return [...prevState, client.userID];
+                if (!prevState.includes(client.userID)) {
+                    return [...prevState, client.userID];
+                }
             });
             setActiveChannel(newChannel);
         } catch (error) {
@@ -102,6 +113,7 @@ export default function CreateChannel() {
                     <AiFillCloseCircle
                         onClick={(e) => {
                             setIsCreating((prevState) => !prevState);
+                            setSelectedUsers([]);
                             setChannelName("");
                         }}
                     />

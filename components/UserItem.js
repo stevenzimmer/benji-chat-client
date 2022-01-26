@@ -26,7 +26,10 @@ export default function UserItem({ user }) {
     };
 
     useEffect(() => {
-        setSelected(selectedUsers.includes(user.id));
+        console.log({ selectedUsers });
+        if (selectedUsers) {
+            setSelected(selectedUsers.includes(user.id));
+        }
     }, [selected]);
     return (
         <div className="user-item py-2" onClick={handleSelect}>

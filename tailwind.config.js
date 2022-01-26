@@ -1,3 +1,4 @@
+const colors = require("tailwindcss/colors");
 module.exports = {
     content: [
         "./pages/**/*.{js,ts,jsx,tsx}",
@@ -9,6 +10,11 @@ module.exports = {
                 center: true,
             },
         },
+        colors: {
+            gray: {},
+            grey: { ...colors["slate"] },
+        },
     },
     plugins: [],
+    darkMode: "class",
 };

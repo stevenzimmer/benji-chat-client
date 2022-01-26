@@ -10,12 +10,14 @@ import H4 from "@material-tailwind/react/Heading4";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import Button from "@material-tailwind/react/Button";
-
-import { useForm } from "react-hook-form";
 import { STREAM_API_URL } from "@/config/index";
 
 const cookies = new Cookies();
+
+import { useForm, Controller } from "react-hook-form";
+import SendIcon from "@mui/icons-material/Send";
+
+import { TextField, Button, CircularProgress } from "@mui/material";
 
 export default function Register() {
     const [err, setErr] = useState("");
@@ -55,6 +57,7 @@ export default function Register() {
         handleSubmit,
         watch,
         formState: { errors },
+        control,
     } = useForm({
         defaultValues,
         resolver: yupResolver(schema),
@@ -108,14 +111,13 @@ export default function Register() {
 
             // window.location.reload();
             router.push("/");
-            setIsLoading(false);
         } catch (err) {
+            setIsLoading(false);
             console.log({ err });
             if (err.response.data.message) {
                 setErr(err.response.data.message);
             }
         }
-        setIsLoading(false);
     };
 
     return (
@@ -126,7 +128,7 @@ export default function Register() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="h-screen">
-                <div className="flex h-full justify-start">
+                <div className="flex h-full justify-center bg-blue-50">
                     <div className="lg:w-1/4">
                         <div className="h-full flex items-center justify-center bg-blue-50">
                             <div className="flex justify-center items-center w-full">
@@ -154,46 +156,89 @@ export default function Register() {
                                                             .toUpperCase() +
                                                         result.slice(1);
                                                     return (
-                                                        <div key={i}>
-                                                            <input
-                                                                autoComplete="off"
-                                                                type="text"
-                                                                {...register(
-                                                                    objKey
-                                                                )}
-                                                                placeholder={
-                                                                    finalResult
-                                                                }
-                                                                className={`border ${
-                                                                    errors[
-                                                                        objKey
-                                                                    ]
-                                                                        ? " border-red-500"
-                                                                        : ""
-                                                                }`}
-                                                            />
-                                                            <br />
-                                                            {errors[objKey] &&
-                                                                errors[objKey]
-                                                                    .message}
-                                                        </div>
+                                                        <Controller
+                                                            key={i}
+                                                            control={control}
+                                                            render={() => (
+                                                                <>
+                                                                    <TextField
+                                                                        {...register(
+                                                                            objKey
+                                                                        )}
+                                                                        error={
+                                                                            err ||
+                                                                            errors[
+                                                                                objKey
+                                                                            ]
+                                                                                ? true
+                                                                                : false
+                                                                        }
+                                                                        helperText={
+                                                                            errors[
+                                                                                objKey
+                                                                            ]
+                                                                                ? errors[
+                                                                                      objKey
+                                                                                  ]
+                                                                                      .message
+                                                                                : ""
+                                                                        }
+                                                                        autoFocus={
+                                                                            i ===
+                                                                            0
+                                                                                ? true
+                                                                                : false
+                                                                        }
+                                                                        className={`w-full bg-blue-50 rounded border-0 outline-none mb-2`}
+                                                                        label={
+                                                                            finalResult
+                                                                        }
+                                                                        placeholder={
+                                                                            finalResult
+                                                                        }
+                                                                        type={
+                                                                            objKey ===
+                                                                                "password" ||
+                                                                            objKey ===
+                                                                                "confirmPassword"
+                                                                                ? "password"
+                                                                                : "text"
+                                                                        }
+                                                                        autoComplete="off"
+                                                                        disabled={
+                                                                            isLoading
+                                                                                ? true
+                                                                                : false
+                                                                        }
+                                                                        // variant="standard"
+                                                                    />
+                                                                </>
+                                                            )}
+                                                        />
                                                     );
                                                 }
                                             )}
 
-                                            {!err && (
-                                                <Button
-                                                    color="lightBlue"
-                                                    buttonType="filled"
-                                                    size="regular"
-                                                    rounded={false}
-                                                    block={false}
-                                                    iconOnly={false}
-                                                    ripple="light"
-                                                >
-                                                    Register
-                                                </Button>
-                                            )}
+                                            <Button
+                                                className="bg-blue-200"
+                                                variant="contained"
+                                                endIcon={
+                                                    !isLoading ? (
+                                                        <SendIcon />
+                                                    ) : (
+                                                        <CircularProgress
+                                                            color="inherit"
+                                                            size={20}
+                                                        />
+                                                    )
+                                                }
+                                                disabled={
+                                                    isLoading ? true : false
+                                                }
+                                                type="submit"
+                                            >
+                                                Sign in
+                                            </Button>
                                         </form>
                                         {err && (
                                             <>
@@ -218,9 +263,6 @@ export default function Register() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="lg:w-3/4">
-                        <div className="h-full w-full bg-blue-100"></div>
                     </div>
                 </div>
             </div>

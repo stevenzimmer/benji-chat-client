@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useChatContext } from "stream-chat-react";
 import { BsSearch } from "react-icons/bs";
 import ResultsDropdown from "./ResultsDropdown";
+import { InputBase } from "@mui/material";
 export default function ChannelSearch() {
     const [query, setQuery] = useState("");
     const [loading, setLoading] = useState(false);
@@ -62,12 +63,13 @@ export default function ChannelSearch() {
     }, [query]);
 
     return (
-        <div className="channel-search mb-12">
+        <div className="channel-search mb-12 relative px-6">
             <div className="flex items-center mb-6">
                 <div>
                     <BsSearch />
                 </div>
                 <div>
+                    {/* <InputBase placeholder="Search" /> */}
                     <input
                         type="text"
                         placeholder="search"

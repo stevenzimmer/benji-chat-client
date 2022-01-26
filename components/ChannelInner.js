@@ -42,7 +42,7 @@ export default function ChannelInner() {
 
     return (
         <GiphyContext.Provider value={{ giphyState, setGiphyState }}>
-            <div className="flex w-full">
+            <div className="flex w-full ">
                 <Window>
                     <TeamChannelHeader />
                     <MessageList />

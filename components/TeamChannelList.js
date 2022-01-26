@@ -34,11 +34,13 @@ export default function TeamChannelList({
     }
     return (
         <>
-            <div className="flex items-center team-channel-list mb-4">
+            <div className="flex items-center justify-between team-channel-list  group dark:bg-grey-100 p-2">
                 <div>
-                    <p>{type === "team" ? "Channels" : "Direct Messages"} </p>
+                    <p className="">
+                        {type === "team" ? "Channels" : "Direct Messages"}{" "}
+                    </p>
                 </div>
-                <div>
+                <div className="hidden group-hover:block">
                     <GrFormAdd
                         onClick={() => {
                             setCreateType(type);
@@ -51,7 +53,7 @@ export default function TeamChannelList({
                     />
                 </div>
             </div>
-            {children}
+            <div className="dark:text-grey-50">{children}</div>
         </>
     );
 }

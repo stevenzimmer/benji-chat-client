@@ -24,7 +24,7 @@ export default function TeamChannelHeader() {
     };
 
     return (
-        <div className="team-channer-header p-6">
+        <div className="team-channer-header p-6 border-b dark:border-grey-500">
             <div className="flex justify-between">
                 <div>
                     <MessagingHeader />
@@ -49,7 +49,7 @@ const MessagingHeader = () => {
 
     if (channel.type === "messaging") {
         return (
-            <>
+            <div className="flex items-centers">
                 {members.map(({ user }, i) => {
                     console.log({ user });
                     return (
@@ -60,7 +60,7 @@ const MessagingHeader = () => {
                     );
                 })}
                 {additionalMembers > 0 && <p>and {additionalMembers} more</p>}
-            </>
+            </div>
         );
     }
 

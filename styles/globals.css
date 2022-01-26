@@ -17,4 +17,43 @@
             }
         }
     }
+    &-container {
+        .str {
+            &-chat {
+                &__li {
+                }
+
+                &__avatar {
+                    /* time {
+                        @apply;
+                    } */
+
+                    &-fallback {
+                        @apply dark:bg-grey-50 dark:text-grey-700;
+                    }
+                }
+
+                &__message {
+                    &-team {
+                        &-meta {
+                        }
+
+                        &-group {
+                        }
+
+                        &-author {
+                            @apply dark:text-grey-200;
+                        }
+                        &-content {
+                            span {
+                                p {
+                                    @apply dark:text-grey-200;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

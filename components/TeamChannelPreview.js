@@ -27,6 +27,28 @@ export default function TeamChannelPreview({ channel, type }) {
             ({ user }) => user.id !== client.userID
         );
 
+        if (members.length > 1) {
+            console.log({ members });
+            return (
+                <div className="direct-message-preview flex items-center">
+                    <div className="">
+                        <p>
+                            {/* {members[0]?.user.fullName || members[0]?.user?.id} */}
+                            {members.map((member, i) => {
+                                return (
+                                    <span key={i}>
+                                        {member?.user?.fullName ||
+                                            member?.user?.id}
+                                        ,{" "}
+                                    </span>
+                                );
+                            })}
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div className="direct-message-preview flex items-center">
                 <div>
@@ -43,9 +65,15 @@ export default function TeamChannelPreview({ channel, type }) {
         );
     };
     return (
-        <div className="team-channel-preview">
+        <div className="team-channel-preview ">
             <div
-                className={channel?.id === activeChannel?.id ? "selected" : ""}
+                className={`
+                    ${
+                        channel?.id === activeChannel?.id
+                            ? "selected text-white"
+                            : " dark:text-grey-400"
+                    }
+                    px-6 hover:bg-grey-500 py-2 cursor-pointer`}
                 onClick={() => {
                     setIsCreating(false);
                     setIsEditing(false);

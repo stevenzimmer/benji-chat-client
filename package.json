@@ -8,8 +8,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.8",
     "@material-tailwind/react": "0.3.4",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/material": "^5.3.1",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",

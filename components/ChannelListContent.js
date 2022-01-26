@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { useState } from "react";
 
 import { ChannelList, useChatContext } from "stream-chat-react";
 import Cookies from "universal-cookie";
@@ -23,13 +24,13 @@ export default function ChannelListContent() {
     // console.log("user", client._user.name);
 
     return (
-        <div className="flex channel-list-content h-full">
+        <div className={`flex channel-list-content h-full `}>
             <div className="lg:w-1/4">
                 <DynamicSidebar />
             </div>
             <div className="lg:w-3/4">
-                <div className="flex justify-center bg-blue-100 py-6 h-full">
-                    <div className="lg:w-11/12">
+                <div className="flex justify-center bg-blue-100 dark:bg-grey-900 dark:text-white py-6 h-full">
+                    <div className="lg:w-full">
                         <div>
                             <CompanyHeader />
                             <ChannelSearch />

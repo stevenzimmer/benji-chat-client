@@ -28,7 +28,7 @@ client.connectUser(
 );
 
 export default function Index() {
-    // console.log({ client });
+    const [isDark, setIsDark] = useState(true);
 
     return (
         <>
@@ -45,7 +45,7 @@ export default function Index() {
             </Head>
             <div className="h-screen">
                 <Chat client={client} theme="team light">
-                    <div className="flex h-full">
+                    <div className={`flex h-full ${isDark ? "dark" : ""}`}>
                         <div className="lg:w-1/4">
                             <ChannelListContent />
                         </div>

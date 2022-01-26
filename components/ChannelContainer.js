@@ -35,13 +35,13 @@ export default function ChannelContainer() {
     }
 
     const EmptyState = () => (
-        <div className="empty-state">
+        <div className="empty-state p-6">
             <p>This is the beginning of your chat history</p>
             <p>Send messages, attachments, links and more</p>
         </div>
     );
     return (
-        <div className="channel-container h-full">
+        <div className="channel-container h-full dark:bg-grey-700">
             <Channel EmptyStateIndicator={EmptyState} Message={MessageTeam}>
                 <ChannelInner />
             </Channel>
