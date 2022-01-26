@@ -27,6 +27,7 @@ export default function UserItem({ user }) {
 
     useEffect(() => {
         console.log({ selectedUsers });
+        console.log({ user });
         if (selectedUsers) {
             setSelected(selectedUsers.includes(user.id));
         }

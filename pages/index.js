@@ -14,18 +14,21 @@ import "stream-chat-react/dist/css/index.css";
 
 const cookies = new Cookies();
 const authToken = cookies.get("token");
+
 const api_key = process.env.NEXT_PUBLIC_STREAM_API_KEY;
 const client = StreamChat.getInstance(api_key);
-client.connectUser(
-    {
-        id: cookies.get("userId"),
-        name: cookies.get("username"),
-        fullName: cookies.get("fullName"),
-        phoneNumber: cookies.get("phoneNumber"),
-        hashedPassword: cookies.get("hashedPassword"),
-    },
-    authToken
-);
+if (cookies.get("userId")) {
+    client.connectUser(
+        {
+            id: cookies.get("userId"),
+            name: cookies.get("username"),
+            // fullName: cookies.get("fullName"),
+            // phoneNumber: cookies.get("phoneNumber"),
+            // hashedPassword: cookies.get("hashedPassword"),
+        },
+        authToken
+    );
+}
 
 export default function Index() {
     const [isDark, setIsDark] = useState(true);

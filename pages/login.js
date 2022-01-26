@@ -52,6 +52,7 @@ export default function Login() {
         const subscription = watch((data) => {
             console.log(data);
             setErr("");
+            setIsErr(false);
         });
 
         return () => {
