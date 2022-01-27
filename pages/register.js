@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
@@ -128,12 +129,22 @@ export default function Register() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="h-screen">
-                <div className="flex h-full justify-center bg-blue-50">
+                <div className="flex h-full justify-center bg-blue-100">
                     <div className="lg:w-1/4">
-                        <div className="h-full flex items-center justify-center bg-blue-50">
+                        <div className="h-full flex items-center justify-center bg-blue-100">
                             <div className="flex justify-center items-center w-full">
                                 <div className="w-11/12">
                                     <div className="bg-white p-12 rounded shadow w-full">
+                                        <div className="bg-white rounded-full shadow-lg h-20 w-20 mx-auto flex items-center justify-center">
+                                            <div>
+                                                <Image
+                                                    src={`/emoticons/2.png`}
+                                                    width={70}
+                                                    height={70}
+                                                    alt="Benji image 1"
+                                                />
+                                            </div>
+                                        </div>
                                         <div className="text-center mb-6">
                                             <H4>Register</H4>
                                         </div>
@@ -220,8 +231,6 @@ export default function Register() {
                                             )}
 
                                             <Button
-                                                className="bg-blue-200"
-                                                variant="contained"
                                                 endIcon={
                                                     !isLoading ? (
                                                         <SendIcon />
@@ -237,7 +246,7 @@ export default function Register() {
                                                 }
                                                 type="submit"
                                             >
-                                                Sign in
+                                                Register
                                             </Button>
                                         </form>
                                         {err && (

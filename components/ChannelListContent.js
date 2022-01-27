@@ -6,8 +6,10 @@ import Cookies from "universal-cookie";
 import ChannelSearch from "./ChannelSearch";
 import TeamChannelList from "./TeamChannelList";
 import TeamChannelPreview from "./TeamChannelPreview";
-const DynamicSidebar = dynamic(() => import("./Sidebar"));
+import Sidebar from "@/components/Sidebar";
+
 import CompanyHeader from "./CompanyHeader";
+import { AnimatePresence } from "framer-motion";
 
 const customChannelTeamFilter = (channels) =>
     channels.filter((channel) => channel.type === "team");
@@ -26,14 +28,14 @@ export default function ChannelListContent() {
     return (
         <div className={`flex channel-list-content h-full `}>
             <div className="lg:w-1/4">
-                <DynamicSidebar />
+                <Sidebar />
             </div>
             <div className="lg:w-3/4">
                 <div className="flex justify-center bg-blue-100 dark:bg-grey-900 dark:text-white py-6 h-full">
                     <div className="lg:w-full">
                         <div>
                             <CompanyHeader />
-                            <ChannelSearch />
+                            {/* <ChannelSearch /> */}
                             <ChannelList
                                 channelRenderFilterFn={customChannelTeamFilter}
                                 filters={filters}

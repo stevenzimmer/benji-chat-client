@@ -1,5 +1,18 @@
 import { Avatar, useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
+import { motion, AnimatePresence } from "framer-motion";
+
+const itemVariants = {
+    hidden: {
+        opacity: 0,
+    },
+    visible: {
+        opacity: 1,
+    },
+    transition: {
+        duration: 0.3,
+    },
+};
 export default function TeamChannelPreview({ channel, type }) {
     const {
         channel: activeChannel,

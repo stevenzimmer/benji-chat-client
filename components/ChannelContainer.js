@@ -35,7 +35,7 @@ export default function ChannelContainer() {
     }
 
     const EmptyState = () => (
-        <div className="empty-state p-6">
+        <div className="empty-state p-6 text-grey-200">
             <p>This is the beginning of your chat history</p>
             <p>Send messages, attachments, links and more</p>
         </div>

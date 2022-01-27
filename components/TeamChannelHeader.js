@@ -29,7 +29,7 @@ export default function TeamChannelHeader() {
                 <div>
                     <MessagingHeader />
                 </div>
-                <div>
+                <div className="text-grey-200">
                     <p>{getWatcherText(watcher_count)}</p>
                 </div>
             </div>
@@ -49,11 +49,14 @@ const MessagingHeader = () => {
 
     if (channel.type === "messaging") {
         return (
-            <div className="flex items-centers">
+            <div className="flex items-center text-grey-200">
                 {members.map(({ user }, i) => {
                     console.log({ user });
                     return (
-                        <div key={i} className="flex items-center">
+                        <div
+                            key={i}
+                            className="flex items-center text-grey-200"
+                        >
                             <Avatar name={user.fullName || user.id} size={32} />
                             <p>{user.fullName || user.id}</p>
                         </div>
@@ -68,12 +71,12 @@ const MessagingHeader = () => {
 
     return (
         <>
-            <div className="flex items-center messaging-header ">
+            <div className="flex items-center messaging-header text-grey-200">
                 <div>
                     <p># {channel.data.name || channel.data.id}</p>
                 </div>
-                <div>
-                    <span>
+                <div className="px-2">
+                    <span className="">
                         <GrCircleInformation
                             onClick={() => {
                                 setIsEditing((prevState) => !prevState);

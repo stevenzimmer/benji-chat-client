@@ -20,14 +20,20 @@
     &-container {
         .str {
             &-chat {
+                &__date {
+                    &-separator {
+                        &-line {
+                            @apply dark:bg-grey-500;
+                        }
+                        &-date {
+                            @apply dark:text-grey-200;
+                        }
+                    }
+                }
                 &__li {
                 }
 
                 &__avatar {
-                    /* time {
-                        @apply;
-                    } */
-
                     &-fallback {
                         @apply dark:bg-grey-50 dark:text-grey-700;
                     }
@@ -36,6 +42,9 @@
                 &__message {
                     &-team {
                         &-meta {
+                            time {
+                                @apply dark:text-grey-200;
+                            }
                         }
 
                         &-group {
