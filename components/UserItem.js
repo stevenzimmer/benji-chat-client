@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import { Avatar } from "stream-chat-react";
 import { FcInvite } from "react-icons/fc";
 import { useStateContext } from "@/context/StateContextProvider";
+import AddIcon from "@mui/icons-material/Add";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 export default function UserItem({ user }) {
     // console.log("user item", user);
     const { selectedUsers, setSelectedUsers } = useStateContext();
-    // console.log("user item selected users", selectedUsers);
 
     const [selected, setSelected] = useState(false);
-    const [notSelected, setNotSelected] = useState([]);
 
     const handleSelect = (e) => {
         if (selected) {
@@ -26,8 +26,6 @@ export default function UserItem({ user }) {
     };
 
     useEffect(() => {
-        console.log({ selectedUsers });
-        console.log({ user });
         if (selectedUsers) {
             setSelected(selectedUsers.includes(user.id));
         }
@@ -35,17 +33,24 @@ export default function UserItem({ user }) {
     return (
         <div className="user-item py-2" onClick={handleSelect}>
             <div className="flex items-center">
-                <div>
-                    <Avatar name={user.fullName || user.id} size={32} />
+                <div className="flex items-center">
+                    <div className="">
+                        <Avatar
+                            shape="rounded"
+                            name={user.fullName || user.id}
+                            size={32}
+                        />
+                    </div>
+                    <div className="px-2">
+                        <p>{user.fullName || user.id}</p>
+                    </div>
                 </div>
-                <div>
-                    <p>{user.fullName || user.id}</p>
-                </div>
-                <div className="px-2">
+
+                <div className="px-6 cursor-pointer">
                     {selected ? (
-                        <FcInvite />
+                        <AddIcon color="success" />
                     ) : (
-                        <div className="w-4 h-4 rounded-full border"></div>
+                        <PersonRemoveIcon color="error" />
                     )}
                 </div>
             </div>

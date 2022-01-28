@@ -5,14 +5,14 @@ module.exports = {
         "./components/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
+        colors: {
+            gray: {},
+            grey: { ...colors["slate"] },
+        },
         extend: {
             container: {
                 center: true,
             },
-        },
-        colors: {
-            gray: {},
-            grey: { ...colors["slate"] },
         },
     },
     plugins: [],

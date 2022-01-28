@@ -3,32 +3,12 @@ import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 import UserList from "./UserList";
 
-// import ChannelNameInput from "./ChannelNameInput";
-
 import { AiFillCloseCircle } from "react-icons/ai";
+import CloseIcon from "@mui/icons-material/Close";
 import kebabCase from "just-kebab-case";
 
-const ChannelNameInput = () => {
-    const { setChannelName, channelName } = useStateContext();
-    // console.log({ channelName });
-    const handleChange = (event) => {
-        event.preventDefault();
-
-        setChannelName(event.target.value);
-    };
-
-    return (
-        <div className="channel-name-input__wrapper">
-            <p>Name</p>
-            <input
-                value={channelName}
-                onChange={handleChange}
-                placeholder="channel-name"
-            />
-            <p>Add Members</p>
-        </div>
-    );
-};
+import Button from "@mui/material/Button";
+import ChannelNameInput from "./ChannelNameInput";
 
 export default function EditChannel() {
     const { channel } = useChatContext();
@@ -104,24 +84,25 @@ export default function EditChannel() {
         });
     }, []);
     return (
-        <div className="edit-channel">
-            <div>
-                <p>Edit Channel</p>
-                <AiFillCloseCircle
-                    onClick={(e) => {
-                        setIsEditing((prevState) => !prevState);
-                    }}
-                />
+        <div className="edit-channel px-6 dark:bg-grey-300 py-6 h-full">
+            <div className="flex items-center mb-12">
+                <div>
+                    <p>Edit Channel</p>
+                </div>
+                <div>
+                    <CloseIcon
+                        onClick={(e) => {
+                            setIsEditing((prevState) => !prevState);
+                        }}
+                    />
+                </div>
             </div>
 
-            <ChannelNameInput
-                channelName={channelName}
-                setChannelName={setChannelName}
-            />
+            <ChannelNameInput />
             <UserList />
-            <div onClick={handleSaveChanges}>
-                <p>Save Changes</p>
-            </div>
+            <Button variant="outlined" onClick={handleSaveChanges}>
+                Save Changes
+            </Button>
         </div>
     );
 }

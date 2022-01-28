@@ -8,6 +8,8 @@ export const StateContextProvider = ({ children }) => {
     const [isCreating, setIsCreating] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
+    const [isOpen, setIsOpen] = useState(true);
+
     const [toggleContainer, setToggleContainer] = useState(false);
     const [selectedUsers, setSelectedUsers] = useState("");
     const [channelName, setChannelName] = useState("");
@@ -27,6 +29,8 @@ export const StateContextProvider = ({ children }) => {
                 setSelectedUsers,
                 channelName,
                 setChannelName,
+                isOpen,
+                setIsOpen,
             }}
         >
             {children}

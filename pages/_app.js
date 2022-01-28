@@ -1,4 +1,4 @@
-import "@material-tailwind/react/tailwind.css";
+// import "@material-tailwind/react/tailwind.css";
 import "@/styles/globals.css";
 import { StateContextProvider } from "@/context/StateContextProvider";
 

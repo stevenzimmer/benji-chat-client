@@ -2,37 +2,39 @@ import { useState, useEffect } from "react";
 import { useChatContext } from "stream-chat-react";
 import { useStateContext } from "@/context/StateContextProvider";
 import UserList from "./UserList";
-// import ChannelNameInput from "./ChannelNameInput";
 import kebabCase from "just-kebab-case";
 
 import { AiFillCloseCircle } from "react-icons/ai";
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
+import ChannelNameInput from "./ChannelNameInput";
 
-const ChannelNameInput = () => {
-    const { channelName, setChannelName } = useStateContext();
-    const handleChange = (e) => {
-        e.preventDefault();
-        setChannelName(e.target.value);
-    };
+// const ChannelNameInput = () => {
+//     const { channelName, setChannelName } = useStateContext();
+//     const handleChange = (e) => {
+//         e.preventDefault();
+//         setChannelName(e.target.value);
+//     };
 
-    return (
-        <div className="channel-name-input__wrapper ">
-            <div className="flex items-center mb-6">
-                <div>
-                    <p>Name</p>
-                </div>
-                <div>
-                    <input
-                        value={channelName}
-                        onChange={handleChange}
-                        placeholder="channel-name"
-                    />
-                </div>
-            </div>
+//     return (
+//         <div className="channel-name-input__wrapper ">
+//             <div className="flex items-center mb-6">
+//                 <div>
+//                     <p>Name</p>
+//                 </div>
+//                 <div>
+//                     <input
+//                         value={channelName}
+//                         onChange={handleChange}
+//                         placeholder="channel-name"
+//                     />
+//                 </div>
+//             </div>
 
-            <p>Add Members</p>
-        </div>
-    );
-};
+//             <p>Add Members</p>
+//         </div>
+//     );
+// };
 export default function CreateChannel() {
     const {
         createType,
@@ -110,7 +112,7 @@ export default function CreateChannel() {
                     </p>
                 </div>
                 <div>
-                    <AiFillCloseCircle
+                    <CloseIcon
                         onClick={(e) => {
                             setIsCreating((prevState) => !prevState);
                             setSelectedUsers([]);
@@ -129,18 +131,11 @@ export default function CreateChannel() {
 
             <UserList />
 
-            <div
-                className={`border w-auto inline-block px-2 create-${
-                    createType === "team" ? "channel" : "message-group"
-                }-button`}
-                onClick={createChannel}
-            >
-                <p>
-                    {createType === "team"
-                        ? "Create channel"
-                        : "Create Message group"}
-                </p>
-            </div>
+            <Button variant="outlined" onClick={createChannel}>
+                {createType === "team"
+                    ? "Create channel"
+                    : "Create Message group"}
+            </Button>
         </div>
     );
 }

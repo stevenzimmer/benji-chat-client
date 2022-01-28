@@ -11,6 +11,7 @@ import ChannelListContent from "@/components/ChannelListContent";
 import ChannelContainer from "@/components/ChannelContainer";
 
 import "stream-chat-react/dist/css/index.css";
+import { useStateContext } from "@/context/StateContextProvider";
 
 const cookies = new Cookies();
 const authToken = cookies.get("token");
@@ -22,9 +23,9 @@ if (cookies.get("userId")) {
         {
             id: cookies.get("userId"),
             name: cookies.get("username"),
-            // fullName: cookies.get("fullName"),
-            // phoneNumber: cookies.get("phoneNumber"),
-            // hashedPassword: cookies.get("hashedPassword"),
+            fullName: cookies.get("fullName"),
+            phoneNumber: cookies.get("phoneNumber"),
+            hashedPassword: cookies.get("hashedPassword"),
         },
         authToken
     );
@@ -32,6 +33,7 @@ if (cookies.get("userId")) {
 
 export default function Index() {
     const [isDark, setIsDark] = useState(true);
+    const { isOpen } = useStateContext();
 
     return (
         <>
@@ -48,11 +50,20 @@ export default function Index() {
             </Head>
             <div className="h-screen">
                 <Chat client={client} theme="team light">
-                    <div className={`flex h-full ${isDark ? "dark" : ""}`}>
-                        <div className="lg:w-1/4">
-                            <ChannelListContent />
-                        </div>
-                        <div className="lg:w-3/4">
+                    <div
+                        className={`flex h-full justify-end ${
+                            isDark ? "dark" : ""
+                        }`}
+                    >
+                        <ChannelListContent
+                            isDark={isDark}
+                            setIsDark={setIsDark}
+                        />
+                        <div
+                            className={`w-full ${
+                                isOpen ? "md:pl-56 lg:pl-96" : "w-full pl-24"
+                            }`}
+                        >
                             <ChannelContainer />
                         </div>
                     </div>

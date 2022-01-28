@@ -7,7 +7,11 @@
         &-content {
             .str {
                 &-chat {
-                    @apply h-full mb-12 last:mb-0;
+                    &.team {
+                        &.light {
+                            @apply relative h-full left-0 shadow-none min-h-0;
+                        }
+                    }
                     &-channel {
                         &-list {
                             @apply float-none;
@@ -23,7 +27,7 @@
                 &__date {
                     &-separator {
                         &-line {
-                            @apply dark:bg-grey-500;
+                            @apply dark:bg-grey-500 bg-grey-100;
                         }
                         &-date {
                             @apply dark:text-grey-200;
@@ -35,7 +39,7 @@
 
                 &__avatar {
                     &-fallback {
-                        @apply dark:bg-grey-50 dark:text-grey-700;
+                        @apply dark:text-grey-50;
                     }
                 }
 
@@ -63,6 +67,14 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.str {
+    &-chat {
+        &__avatar {
+            @apply mx-auto !important;
         }
     }
 }

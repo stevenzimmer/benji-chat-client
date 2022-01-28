@@ -9,13 +9,16 @@ import {
     useChannelStateContext,
     useChatContext,
 } from "stream-chat-react";
+import TagIcon from "@mui/icons-material/Tag";
 
 import { useStateContext } from "@/context/StateContextProvider";
 
-import { GrCircleInformation } from "react-icons/gr";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function TeamChannelHeader() {
     const { watcher_count } = useChannelStateContext();
+
+    console.log({ watcher_count });
 
     const getWatcherText = (watchers) => {
         if (!watchers) return "No users online";
@@ -24,7 +27,7 @@ export default function TeamChannelHeader() {
     };
 
     return (
-        <div className="team-channer-header p-6 border-b dark:border-grey-500">
+        <div className="team-channer-header py-6 border-b dark:border-grey-500 border-grey-200">
             <div className="flex justify-between">
                 <div>
                     <MessagingHeader />
@@ -49,16 +52,19 @@ const MessagingHeader = () => {
 
     if (channel.type === "messaging") {
         return (
-            <div className="flex items-center text-grey-200">
+            <div className="flex items-center dark:text-grey-200">
                 {members.map(({ user }, i) => {
                     console.log({ user });
                     return (
-                        <div
-                            key={i}
-                            className="flex items-center text-grey-200"
-                        >
-                            <Avatar name={user.fullName || user.id} size={32} />
-                            <p>{user.fullName || user.id}</p>
+                        <div key={i} className="flex items-center ">
+                            <Avatar
+                                shape="rounded"
+                                name={user.fullName || user.id}
+                                size={24}
+                            />
+                            <div className="px-6">
+                                <p className="">{user.fullName || user.id}</p>
+                            </div>
                         </div>
                     );
                 })}
@@ -67,23 +73,24 @@ const MessagingHeader = () => {
         );
     }
 
-    // console.log({ channel });
-
     return (
         <>
-            <div className="flex items-center messaging-header text-grey-200">
+            <div className="flex items-center messaging-header dark:text-grey-200">
                 <div>
-                    <p># {channel.data.name || channel.data.id}</p>
+                    <TagIcon />
                 </div>
                 <div className="px-2">
-                    <span className="">
-                        <GrCircleInformation
-                            onClick={() => {
-                                setIsEditing((prevState) => !prevState);
-                                setChannelName(channel.data.name);
-                            }}
-                        />
-                    </span>
+                    <p className="">{channel.data.name || channel.data.id}</p>
+                </div>
+                <div className="px-2">
+                    <EditIcon
+                        onClick={() => {
+                            setIsEditing((prevState) => !prevState);
+                            setChannelName(channel.data.name);
+                        }}
+                        fontSize="small"
+                        className="cursor-pointer"
+                    />
                 </div>
             </div>
         </>

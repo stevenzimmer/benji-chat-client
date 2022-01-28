@@ -1,6 +1,7 @@
 import React from "react";
 import { useStateContext } from "@/context/StateContextProvider";
 import { Avatar, useChatContext } from "stream-chat-react";
+import TagIcon from "@mui/icons-material/Tag";
 const channelByUser = async ({
     client,
     setActiveChannel,
@@ -42,10 +43,15 @@ export default function SearchResult({ channel, focusedId, setChannel, type }) {
                         setToggleContainer((prevState) => !prevState);
                     }
                 }}
-                className={focusedId === channel.id ? "focused-channel" : ""}
+                className={` ${
+                    focusedId === channel.id ? "focused-channel" : ""
+                } flex items-center`}
             >
-                <div>
-                    <p># {channel.data.name}</p>
+                <div className="w-12 text-center">
+                    <TagIcon />
+                </div>
+                <div className="px-2">
+                    <p>{channel.data.name}</p>
                 </div>
             </div>
         );
@@ -68,7 +74,7 @@ export default function SearchResult({ channel, focusedId, setChannel, type }) {
             className={focusedId === channel.id ? "focused-user" : ""}
         >
             <div className="search-result-user">
-                <Avatar name={channel.name} size={24} />
+                <Avatar shape="rounded" name={channel.name} size={24} />
 
                 <p>{channel.name}</p>
             </div>

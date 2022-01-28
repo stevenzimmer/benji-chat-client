@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 
-// import { Avatar, useChatChannel } from "stream-chat-react";
-
 import UserListContainer from "./UserListContainer";
 
 import { useChatContext } from "stream-chat-react";
 import UserItem from "./UserItem";
-// import { useStateContext } from "@/context/StateContextProvider";
 
 export default function UserList() {
     const { client } = useChatContext();
@@ -28,10 +25,13 @@ export default function UserList() {
                 const response = await client.queryUsers(
                     {
                         id: { $ne: client.userID },
+                        role: "user",
                     },
                     { id: 1 },
                     { limit: 8 }
                 );
+
+                console.log({ response });
 
                 if (response.users.length) {
                     setUsers(response.users);
@@ -65,15 +65,12 @@ export default function UserList() {
             </UserListContainer>
         );
     }
-    // console.log("User list", users);
     return (
-        <div className="user-list">
-            <UserListContainer>
-                {isLoading && <div>Loading users...</div>}
-                {users?.map((user, i) => (
-                    <UserItem key={i} user={user} />
-                ))}
-            </UserListContainer>
-        </div>
+        <UserListContainer>
+            {isLoading && <div>Loading users...</div>}
+            {users?.map((user, i) => (
+                <UserItem key={i} user={user} />
+            ))}
+        </UserListContainer>
     );
 }

@@ -19,29 +19,21 @@ export default function ChannelContainer() {
     // console.log({ channel });
 
     if (isCreating) {
-        return (
-            <div className="is-creating">
-                <CreateChannel />
-            </div>
-        );
+        return <CreateChannel />;
     }
 
     if (isEditing) {
-        return (
-            <div className="is-editing">
-                <EditChannel />
-            </div>
-        );
+        return <EditChannel />;
     }
 
     const EmptyState = () => (
-        <div className="empty-state p-6 text-grey-200">
+        <div className="empty-state p-6 dark:text-grey-200">
             <p>This is the beginning of your chat history</p>
             <p>Send messages, attachments, links and more</p>
         </div>
     );
     return (
-        <div className="channel-container h-full dark:bg-grey-700">
+        <div className="channel-container h-full dark:bg-grey-600">
             <Channel EmptyStateIndicator={EmptyState} Message={MessageTeam}>
                 <ChannelInner />
             </Channel>

@@ -3,12 +3,18 @@ import { useChatContext } from "stream-chat-react";
 import { BsSearch } from "react-icons/bs";
 import ResultsDropdown from "./ResultsDropdown";
 import { InputBase } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
+import { useStateContext } from "@/context/StateContextProvider";
+import Popover from "@mui/material/Popover";
 export default function ChannelSearch() {
     const [query, setQuery] = useState("");
     const [loading, setLoading] = useState(false);
     const [teamChannels, setTeamChannels] = useState([]);
     const [directMessagingChannels, setDirectMessagingChannels] = useState([]);
+    const [open, setOpen] = useState(false);
     const { client, setActiveChannel } = useChatContext();
+    const { isOpen } = useStateContext();
 
     const getChannels = async (text) => {
         try {
@@ -63,28 +69,46 @@ export default function ChannelSearch() {
     }, [query]);
 
     return (
-        <div className="channel-search mb-12 relative px-6">
-            <div className="flex items-center mb-6">
-                <div>
-                    <BsSearch />
+        <div className="channel-search mb-6 relative">
+            <div className="flex items-center justify-center mb-6 w-full">
+                <div
+                    className={`mx-auto flex items-center justify-center text-center dark:text-grey-50 font-semibold ${
+                        isOpen
+                            ? ""
+                            : "rounded-full hover:dark:bg-grey-600 hover:bg-grey-100 cursor-pointer w-12 h-12"
+                    }`}
+                >
+                    <SearchIcon />
                 </div>
-                <div>
-                    {/* <InputBase placeholder="Search" /> */}
-                    <input
-                        type="text"
-                        placeholder="search"
-                        value={query}
-                        onChange={onSearch}
-                    />
-                </div>
+                {isOpen && (
+                    <div className="w-full px-2 lg:px-6">
+                        <TextField
+                            type="text"
+                            value={query}
+                            onChange={onSearch}
+                            label="Search channels"
+                            variant="filled"
+                            size="small"
+                            className="w-full text-xs dark:bg-grey-100"
+                        />
+                    </div>
+                )}
             </div>
             {query && (
-                <ResultsDropdown
-                    teamChannels={teamChannels}
-                    directMessagingChannels={directMessagingChannels}
-                    loading={loading}
-                    setQuery={setQuery}
-                />
+                <Popover
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                    }}
+                    open={open}
+                >
+                    <ResultsDropdown
+                        teamChannels={teamChannels}
+                        directMessagingChannels={directMessagingChannels}
+                        loading={loading}
+                        setQuery={setQuery}
+                    />
+                </Popover>
             )}
         </div>
     );

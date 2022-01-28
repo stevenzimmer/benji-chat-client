@@ -130,12 +130,12 @@ export default function Register() {
             </Head>
             <div className="h-screen">
                 <div className="flex h-full justify-center bg-blue-100">
-                    <div className="lg:w-1/4">
+                    <div className="lg:w-1/3">
                         <div className="h-full flex items-center justify-center bg-blue-100">
                             <div className="flex justify-center items-center w-full">
                                 <div className="w-11/12">
-                                    <div className="bg-white p-12 rounded shadow w-full">
-                                        <div className="bg-white rounded-full shadow-lg h-20 w-20 mx-auto flex items-center justify-center">
+                                    <div className="bg-white p-6 rounded shadow w-full">
+                                        <div className="bg-white rounded-full shadow-lg h-20 w-20 mx-auto flex items-center justify-center mb-2">
                                             <div>
                                                 <Image
                                                     src={`/emoticons/2.png`}
@@ -151,7 +151,9 @@ export default function Register() {
 
                                         <form
                                             onSubmit={handleSubmit(submitForm)}
-                                            className={`${isLoading} ? "opacity-75" : "" `}
+                                            className={`${
+                                                isLoading ? "opacity-75" : ""
+                                            }`}
                                         >
                                             {Object.keys(defaultValues).map(
                                                 (objKey, i) => {

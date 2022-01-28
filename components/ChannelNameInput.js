@@ -1,28 +1,27 @@
 import kebabCase from "kebab-case";
 import { useStateContext } from "@/context/StateContextProvider";
+
+import TextField from "@mui/material/TextField";
 export default function ChannelNameInput() {
-    const { channelName, setChannelName } = useStateContext();
-    const handleChange = (e) => {
-        e.preventDefault();
-        setChannelName(kebabCase(e.target.value));
+    const { setChannelName, channelName } = useStateContext();
+    // console.log({ channelName });
+    const handleChange = (event) => {
+        event.preventDefault();
+
+        setChannelName(event.target.value);
     };
 
     return (
-        <div className="channel-name-input">
-            <div className="flex mb-4">
-                <div>
-                    <p>Name</p>
-                </div>
-                <div className="px-2">
-                    <input
-                        type="text"
-                        value={channelName}
-                        onChange={handleChange}
-                        placeholder="channel-name (No spaces)"
-                        className="border"
-                    />
-                </div>
-            </div>
+        <div className="channel-name-input__wrapper mb-12">
+            <TextField
+                value={channelName}
+                onChange={handleChange}
+                type="text"
+                label="Channel name"
+                variant="filled"
+                size="small"
+                className="w-full text-xs dark:bg-grey-100"
+            />
         </div>
     );
 }
