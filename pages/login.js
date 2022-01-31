@@ -121,14 +121,12 @@ export default function Login() {
                                 <div className="w-11/12">
                                     <div className="bg-white p-6 rounded shadow w-full">
                                         <div className="bg-white rounded-full shadow-lg h-20 w-20 mx-auto flex items-center justify-center mb-2">
-                                            <div>
-                                                <Image
-                                                    src={`/emoticons/3.png`}
-                                                    width={70}
-                                                    height={70}
-                                                    alt="Benji image 1"
-                                                />
-                                            </div>
+                                            <Image
+                                                src={`/emoticons/3.png`}
+                                                width={70}
+                                                height={70}
+                                                alt="Benji image 1"
+                                            />
                                         </div>
                                         <div className="text-center mb-6">
                                             <H4>Sign in</H4>
